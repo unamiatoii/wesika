@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget mdpForget(BuildContext context) {
+Widget textButton(BuildContext context, String texte) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 30),
     child: TextButton(
       onPressed: null,
       child: Text(
-        'Mot de passe oublié !',
+        texte,
         style: TextStyle(
           color: Theme.of(context).colorScheme.secondary,
           fontWeight: FontWeight.bold,

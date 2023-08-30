@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wesika/main.dart';
+import 'package:wesika/composants/Buttons.dart';
+import 'package:wesika/composants/changePage.dart';
 import 'package:wesika/pages/Acceuil/Login.dart';
 import 'package:wesika/pages/Acceuil/Register.dart';
 
@@ -30,70 +31,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Colors.white,
-                        disabledForegroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
-                        minimumSize: const Size(150, 45),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              20), // Ajustez le rayon selon vos préférences
-                        ),
-                      ).copyWith(
-                        side: MaterialStateProperty.all<BorderSide>(
-                          BorderSide(
-                            color: Colors.black,
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      child: const Text("COMMENCER"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
-                        disabledForegroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
-                        minimumSize: const Size(150, 45),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ).copyWith(
-                        side: MaterialStateProperty.all<BorderSide>(
-                         const BorderSide(
-                            color: Colors.black,
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      child: const Text("SE CONNECTER"),
-                    ),
+                    buttons(
+                        context: context,
+                        texte: "COMMENCER",
+                        onPressed: () {
+                          changePage(context, RegistrationPage());
+                        },
+                        height: 45,
+                        width: 150,
+                        backcolor: Theme.of(context).colorScheme.primary,
+                        bordercolor: Theme.of(context).colorScheme.primary),
+                    buttons(
+                        context: context,
+                        texte: "SE CONNECTER",
+                        onPressed: () {
+                          changePage(context, LoginPage());
+                        },
+                        height: 45,
+                        width: 150,
+                        backcolor: Theme.of(context).colorScheme.secondary,
+                        bordercolor: Theme.of(context).colorScheme.onPrimary),
                   ],
                 )),
           ],

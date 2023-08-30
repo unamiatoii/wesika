@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wesika/composants/changePage.dart';
 import 'package:wesika/composants/fotgotId.dart';
 import 'package:wesika/main.dart';
 
@@ -28,18 +29,18 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: mdpForget(context),
+      bottomNavigationBar: textButton(context, "Mot de passe oublié"),
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 imageLogo("assets/illustration_sans_bg.png"),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Text(
                     'Welcome Back !',
                     textAlign: TextAlign.center,
@@ -64,35 +65,38 @@ class LoginPage extends StatelessWidget {
                   height: 25,
                 ),
                 InkWell(
-                  onTap: () {
-                    if (verificationConnexion(
-                        emailController, passwordController)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage(title: "okay")),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text("Erreur dans le mot de passe ou le mail"),
-                          duration: Duration(seconds: 3),
-                          showCloseIcon: true,
-                        ),
-                      );
-                    }
-                  },
-                  child: buttons(
-                    bordercolor: Theme.of(context).colorScheme.primary,
-                    backcolor: Theme.of(context).colorScheme.primary,
-                    context: context,
-                    height: 45,
-                    width: 200,
-                    texte: "CONNEXION",
-                    nextPage: MyHomePage(title: "title"),
-                  ),
-                ),
+                    onTap: () {
+                      if (verificationConnexion(
+                          emailController, passwordController)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage(title: "okay")),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text("Erreur dans le mot de passe ou le mail"),
+                            duration: Duration(seconds: 3),
+                            showCloseIcon: true,
+                          ),
+                        );
+                      }
+                    },
+                    child: buttons(
+                        bordercolor: Theme.of(context).colorScheme.primary,
+                        backcolor: Theme.of(context).colorScheme.primary,
+                        context: context,
+                        height: 45,
+                        width: 200,
+                        texte: "CONNEXION",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyHomePage(title: 'okay',)));
+                        })),
               ],
             ),
           ),
