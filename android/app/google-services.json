@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "948018252249",
+    "project_id": "wesikafinance",
+    "storage_bucket": "wesikafinance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948018252249:android:ad375170bccb67d16871c8",
+        "android_client_info": {
+          "package_name": "com.example.wesika"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948018252249-90b34mheihgqghtna82f6h9rasmse0o9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpUyTM4GaxCYa_ZmVJt6llrbxhXC-AEXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948018252249-90b34mheihgqghtna82f6h9rasmse0o9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "948018252249-13832p5mu2rreitaod1dj6g5q7vepipm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wesika.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
