@@ -3,10 +3,14 @@ import 'package:wesika/composants/changePage.dart';
 import 'package:wesika/composants/fotgotId.dart';
 import 'package:wesika/main.dart';
 
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../composants/Buttons.dart';
 import '../../composants/ImageLogo.dart';
 import '../../composants/TextField.dart';
 import '../../composants/passwordField.dart';
+import '../mainPage/HomePage.dart';
 
 bool verificationConnexion(
     TextEditingController mail, TextEditingController pwd) {
@@ -25,6 +29,18 @@ class LoginPage extends StatelessWidget {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  Future<void> _handleGoogleSignIn() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser != null) {
+      // L'utilisateur est connecté avec Google, vous pouvez récupérer ses informations ici
+      // Par exemple, googleUser.displayName pour le nom affiché
+      // Vous pouvez également enregistrer l'utilisateur dans votre base de données
+    } else {
+      // L'utilisateur a annulé la connexion avec Google
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +85,10 @@ class LoginPage extends StatelessWidget {
                       if (verificationConnexion(
                           emailController, passwordController)) {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MyHomePage(title: "okay")),
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyHomePage(),
+                            ));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -95,8 +111,9 @@ class LoginPage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MyHomePage(title: 'okay',)));
+                                  builder: (context) => MyHomePage()));
                         })),
+                const SizedBox(height: 10),
               ],
             ),
           ),
