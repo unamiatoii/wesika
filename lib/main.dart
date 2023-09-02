@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           onSecondary: textColor,
         ),
       ),
-      home: const MyHomePage(),
+      home: const OnboardingPage(),
     );
   }
 }

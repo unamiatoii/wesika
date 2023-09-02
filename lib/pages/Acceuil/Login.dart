@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wesika/composants/changePage.dart';
-import 'package:wesika/composants/fotgotId.dart';
-import 'package:wesika/main.dart';
-
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../composants/Buttons.dart';
 import '../../composants/ImageLogo.dart';
@@ -12,40 +7,52 @@ import '../../composants/TextField.dart';
 import '../../composants/passwordField.dart';
 import '../mainPage/HomePage.dart';
 
-bool verificationConnexion(
-    TextEditingController mail, TextEditingController pwd) {
-  var response = false;
-  if (mail.text == "admin" && pwd.text == "admin") {
-    response = true;
-  } else {
-    response = false;
-  }
-
-  return response;
-}
-
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> _handleGoogleSignIn() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-    if (googleUser != null) {
-      // L'utilisateur est connecté avec Google, vous pouvez récupérer ses informations ici
-      // Par exemple, googleUser.displayName pour le nom affiché
-      // Vous pouvez également enregistrer l'utilisateur dans votre base de données
-    } else {
-      // L'utilisateur a annulé la connexion avec Google
+  Future<void> _handleSignIn(BuildContext context) async {
+    try {
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        // L'utilisateur est connecté avec succès, vous pouvez naviguer vers la page d'accueil
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Erreur dans l'authentification"),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Erreur dans l'authentification"),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: textButton(context, "Mot de passe oublié"),
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: Center(
         child: SingleChildScrollView(
@@ -66,54 +73,33 @@ class LoginPage extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
-                const SizedBox(
-                  height: 15.0,
+                const SizedBox(height: 15),
+                // Vos widgets UI ici, y compris les champs email et mot de passe
+                createTextFieldWithIcon(
+                  "Please enter your e-mail",
+                  "E-mail",
+                  Icons.email_outlined,
+                  emailController,
                 ),
-                createTextFieldWithIcon("Please enter your e-mail", "E-mail",
-                    Icons.email_outlined, emailController),
                 createPasswordFieldWithIcon(
                   hintText: "********",
                   labelText: "Password",
                   iconData: Icons.key_outlined,
                   controller: passwordController,
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                SizedBox(height: 25),
                 InkWell(
-                    onTap: () {
-                      if (verificationConnexion(
-                          emailController, passwordController)) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyHomePage(),
-                            ));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content:
-                                Text("Erreur dans le mot de passe ou le mail"),
-                            duration: Duration(seconds: 3),
-                            showCloseIcon: true,
-                          ),
-                        );
-                      }
-                    },
-                    child: buttons(
-                        bordercolor: Theme.of(context).colorScheme.primary,
-                        backcolor: Theme.of(context).colorScheme.primary,
-                        context: context,
-                        height: 45,
-                        width: 200,
-                        texte: "CONNEXION",
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage()));
-                        })),
-                const SizedBox(height: 10),
+                  child: buttons(
+                    onPressed: () => _handleSignIn(context),
+                    bordercolor: Theme.of(context).colorScheme.primary,
+                    backcolor: Theme.of(context).colorScheme.primary,
+                    context: context,
+                    height: 45,
+                    width: 200,
+                    texte: "CONNEXION",
+                  ),
+                ),
+                SizedBox(height: 10),
               ],
             ),
           ),
