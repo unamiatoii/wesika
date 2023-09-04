@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wesika/pages/Acceuil/OnBoard.dart';
 import 'package:wesika/pages/mainPage/HomePage.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
