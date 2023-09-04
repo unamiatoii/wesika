@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '948018252249',
     projectId: 'wesikafinance',
     storageBucket: 'wesikafinance.appspot.com',
+    androidClientId: '948018252249-bn52to95cf7fnifpabf9ri8lbidcqsn8.apps.googleusercontent.com',
     iosClientId: '948018252249-vrvuh2erli93i6mk423ee8pb0rlqg9l0.apps.googleusercontent.com',
     iosBundleId: 'com.example.wesika',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '948018252249',
     projectId: 'wesikafinance',
     storageBucket: 'wesikafinance.appspot.com',
+    androidClientId: '948018252249-bn52to95cf7fnifpabf9ri8lbidcqsn8.apps.googleusercontent.com',
     iosClientId: '948018252249-13832p5mu2rreitaod1dj6g5q7vepipm.apps.googleusercontent.com',
     iosBundleId: 'com.example.wesika.RunnerTests',
   );

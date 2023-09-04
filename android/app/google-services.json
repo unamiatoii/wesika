@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "948018252249-bn52to95cf7fnifpabf9ri8lbidcqsn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wesika",
+            "certificate_hash": "edaf7e468ecbcffaaa1c4be1da456d4e59948909"
+          }
+        },
+        {
           "client_id": "948018252249-dico5nji2vp3tn8f2slucki5m5qklmp5.apps.googleusercontent.com",
           "client_type": 3
         }

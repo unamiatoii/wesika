@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wesika/pages/Acceuil/OnBoard.dart';
+import 'package:wesika/pages/Acceuil/RegisterMode.dart';
 import 'package:wesika/pages/mainPage/HomePage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           onSecondary: textColor,
         ),
       ),
-      home: const OnboardingPage(),
+      home: ChooseRegistrationMethodPage(),
     );
   }
 }
