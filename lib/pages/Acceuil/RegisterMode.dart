@@ -9,77 +9,7 @@ import '../../composants/ButtonChooseMode.dart';
 import '../../composants/ImageLogo.dart';
 
 class ChooseRegistrationMethodPage extends StatelessWidget {
-  void _afficherBoiteDialogueCode(BuildContext context, String verificationId) {
-    TextEditingController codeController = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Code de Vérification"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: codeController,
-                decoration: InputDecoration(labelText: "Code de vérification"),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  String code = codeController.text;
-                  try {
-                    PhoneAuthCredential credential =
-                        PhoneAuthProvider.credential(
-                      verificationId: verificationId,
-                      smsCode: code,
-                    );
-                    await FirebaseAuth.instance
-                        .signInWithCredential(credential);
-                    // Utilisateur connecté avec succès, redirigez-le ou effectuez d'autres actions.
-                  } catch (e) {
-                    print('Erreur de vérification du code : $e');
-                    // Gérez les erreurs de vérification du code ici.
-                  }
-                  Navigator.pop(
-                      context); // Fermer la boîte de dialogue du code de vérification
-                },
-                child: Text("Valider"),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _demarrerVerificationNumero(BuildContext context, String numero) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    try {
-      await auth.verifyPhoneNumber(
-        phoneNumber: numero,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await auth.signInWithCredential(credential);
-          // Utilisateur connecté avec succès, redirigez-le ou effectuez d'autres actions.
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print('Erreur de vérification : $e');
-          // Gérez les erreurs de vérification ici.
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          // Le code a été envoyé avec succès, vous pouvez demander à l'utilisateur de le saisir.
-          _afficherBoiteDialogueCode(context, verificationId);
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          // Gérez le cas où le délai de récupération automatique du code a expiré.
-        },
-      );
-    } catch (e) {
-      print('Erreur d\'inscription avec téléphone : $e');
-      // Gérez les autres erreurs d'inscription ici.
-    }
-  }
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -123,10 +53,12 @@ class ChooseRegistrationMethodPage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       BtnRegistrationMode(
-                        onPressed: () {},
+                        onPressed: () async {
+                          signInWithNumber(context);
+                        },
                         text: "INSCRIPTION AVEC TELEPHONE",
                         iconColor: Theme.of(context).colorScheme.secondary,
-                        iconData: Icons.facebook,
+                        iconData: Icons.phone_android_outlined,
                       ),
                       SizedBox(height: 20),
                       BtnRegistrationMode(

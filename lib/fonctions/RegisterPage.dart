@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wesika/composants/Buttons.dart';
+import 'package:wesika/composants/TextField.dart';
+import 'package:wesika/pages/Acceuil/EndRegister.dart';
 
 import '../composants/NextPage.dart';
 import '../pages/mainPage/HomePage.dart';
@@ -9,7 +12,7 @@ void _completeLogin(BuildContext context) {
   Navigator.pushReplacement<void, void>(
     context,
     MaterialPageRoute<void>(
-      builder: (BuildContext context) => const MyHomePage(),
+      builder: (BuildContext context) => MyProfile(),
     ),
   );
 }
@@ -101,30 +104,124 @@ Future<void> signInWithGoogle(BuildContext context) async {
   }
 }
 
-Future<void> inscriptionAvecTelephone(BuildContext context, String numeroDeTelephone) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
+//AVEC TELEPHONE
 
+void signInWithNumber(BuildContext context) {
+  TextEditingController numeroController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+          title: Text("Entrez votre numero de telephone"),
+          content: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: createTextFieldWithIcon(
+                        "Telephone",
+                        "Telephone",
+                        Icons.person,
+                        numeroController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Flexible(
+                      fit: FlexFit.loose,
+                      flex: 2,
+                      child: createTextFieldWithIcon(
+                        "OTP",
+                        "OTP",
+                        Icons.lock,
+                        codeController,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Flexible(
+                        child: FloatingActionButton.small(
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(10.0), // Arrondi des coins
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Icon(
+                        Icons.close,
+                      ),
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    )),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Flexible(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary),
+                            onPressed: () {
+                              sendOTPCode(numeroController.text);
+                            },
+                            child: Text(
+                              "code",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ))),
+                    Flexible(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary),
+                            onPressed: () {},
+                            child: Text(
+                              "Valider",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ))),
+                  ],
+                )
+              ],
+            ),
+          ));
+    },
+  );
+}
+
+Future<void> sendOTPCode(String phoneNumber) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
   try {
     await auth.verifyPhoneNumber(
-      phoneNumber: numeroDeTelephone, // Remplacez par le numéro de téléphone de l'utilisateur.
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
-        // Utilisateur connecté avec succès, redirigez-le ou effectuez d'autres actions.
+      phoneNumber: "+225$phoneNumber",
+      verificationCompleted: (verificationId) {
+        print(verificationId);
       },
-      verificationFailed: (FirebaseAuthException e) {
-        print('Erreur de vérification : $e');
-        // Gérez les erreurs de vérification ici.
+      verificationFailed: (error) {
+        // Le code de vérification a échoué
       },
-      codeSent: (String verificationId, int? resendToken) {
-        // Le code a été envoyé avec succès, vous pouvez demander à l'utilisateur de le saisir.
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        // Gérez le cas où le délai de récupération automatique du code a expiré.
+      codeSent: (verificationId, forceResendingToken) {},
+      codeAutoRetrievalTimeout: (verificationId) {
+        // Le délai d'expiration du code de vérification a expiré
       },
     );
   } catch (e) {
-    print('Erreur d\'inscription avec téléphone : $e');
-    // Gérez les autres erreurs d'inscription ici.
+    print('Erreur lors de l\'envoi du code OTP : $e');
+    // Gérez les autres erreurs ici.
   }
 }
+
+//PHOTO
 
