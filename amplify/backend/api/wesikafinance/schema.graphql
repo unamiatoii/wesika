@@ -1,0 +1,18 @@
+type Tontine @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Nom: String
+  MontantRamassage: String
+  MontantDepot: String
+  IntervalRamassage: AWSDateTime
+  IntervalDepot: AWSDateTime
+  users: [User] @manyToMany(relationName: "UserTontine")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Nom: String
+  Prenom: String
+  Email: AWSEmail
+  Telephone: AWSPhone
+  Participant: [Tontine] @manyToMany(relationName: "UserTontine")
+}

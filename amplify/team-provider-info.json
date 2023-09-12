@@ -1,0 +1,21 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wesikafinance-staging-123931-authRole",
+      "UnauthRoleArn": "arn:aws:iam::544286745756:role/amplify-wesikafinance-staging-123931-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::544286745756:role/amplify-wesikafinance-staging-123931-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-wesikafinance-staging-123931-deployment",
+      "UnauthRoleName": "amplify-wesikafinance-staging-123931-unauthRole",
+      "StackName": "amplify-wesikafinance-staging-123931",
+      "StackId": "arn:aws:cloudformation:us-east-1:544286745756:stack/amplify-wesikafinance-staging-123931/41e0e030-50a0-11ee-a029-0ad0d7a36cfb",
+      "AmplifyAppId": "d3jll0nhhfz981"
+    },
+    "categories": {
+      "auth": {
+        "wesikafinance18dd3069": {},
+        "wesikafinance8af74a94": {}
+      }
+    }
+  }
+}
