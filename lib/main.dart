@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:wesika/pages/Acceuil/EndRegister.dart';
 import 'package:wesika/pages/Acceuil/OnBoard.dart';
+import 'package:wesika/pages/Acceuil/Register.dart';
+import 'package:wesika/pages/Acceuil/RegisterMode.dart';
 import 'package:wesika/pages/mainPage/HomePage.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +38,7 @@ class MyApp extends StatelessWidget {
           onSecondary: textColor,
         ),
       ),
-      home: const MyHomePage(),
+      home: OnboardingPage(),
     );
   }
 }

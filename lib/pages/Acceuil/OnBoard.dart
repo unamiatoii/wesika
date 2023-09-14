@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wesika/composants/Buttons.dart';
-import 'package:wesika/composants/changePage.dart';
 import 'package:wesika/pages/Acceuil/Login.dart';
 import 'package:wesika/pages/Acceuil/Register.dart';
+import 'package:wesika/pages/Acceuil/RegisterMode.dart';
+
+import '../../composants/NextPage.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -33,9 +35,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   children: [
                     buttons(
                         context: context,
-                        texte: "COMMENCER",
+                        texte: "S'INSCRIRE",
                         onPressed: () {
-                          changePage(context, RegistrationPage());
+                          changePage(context, ChooseRegistrationMethodPage());
                         },
                         height: 45,
                         width: 150,

@@ -32,8 +32,7 @@ Widget createDateFieldWithIcon(String hintText, String labelText,
           ),
           onTap: () async {
             DateTime? selectedDate = DateTime.now();
-            FocusScope.of(context).requestFocus(FocusNode()); // Hide keyboard
-
+            FocusScope.of(context).requestFocus(FocusNode());
             selectedDate = await showDatePicker(
               context: context,
               initialDate: selectedDate,
