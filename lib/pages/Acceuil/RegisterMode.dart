@@ -53,15 +53,6 @@ class ChooseRegistrationMethodPage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       BtnRegistrationMode(
-                        onPressed: () async {
-                          signInWithNumber(context);
-                        },
-                        text: "INSCRIPTION AVEC TELEPHONE",
-                        iconColor: Theme.of(context).colorScheme.secondary,
-                        iconData: Icons.phone_android_outlined,
-                      ),
-                      SizedBox(height: 20),
-                      BtnRegistrationMode(
                         onPressed: () {
                           Navigator.push(
                               context,

@@ -5,21 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:wesika/composants/Buttons.dart';
-import 'package:wesika/composants/TextField.dart';
-import 'package:wesika/models/Users.dart'; // Assurez-vous que le chemin d'accès est correct.
+
 import 'package:wesika/pages/Acceuil/EndRegister.dart';
 import '../../composants/NextPage.dart';
 import '../../pages/mainPage/HomePage.dart';
-
-void _completeLogin(BuildContext context) {
-  Navigator.pushReplacement<void, void>(
-    context,
-    MaterialPageRoute<void>(
-      builder: (BuildContext context) => MyHomePage(),
-    ),
-  );
-}
 
 //Valider la premier partie de l'inscription
 Future<void> validerInscription(
@@ -205,11 +194,35 @@ Future<void> signInWithGoogle(BuildContext context) async {
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(authCredential);
 
-      // Authentification avec Firebase en utilisant l'authCredential
-      // Enregistrez l'utilisateur dans votre base de données Firebase si nécessaire.
+      // Récupérez l'utilisateur actuel
+      User? actuelUser = userCredential.user;
 
-      // Redirigez l'utilisateur vers la page d'accueil en cas de succès.
-      _completeLogin(context);
+      if (actuelUser != null) {
+        // Vérifiez si l'utilisateur a des données dans tous les champs nécessaires
+        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+            .collection("Utilisateur")
+            .doc(actuelUser.uid)
+            .get();
+
+        if (userSnapshot.exists) {
+          Map<String, dynamic> userData =
+              userSnapshot.data() as Map<String, dynamic>;
+
+          if (userData['nom'] != null &&
+              userData['prenom'] != null &&
+              userData['email'] != null &&
+              userData['profileImageUrl'] != null) {
+            // L'utilisateur est déjà inscrit, redirigez-le vers la page d'accueil
+            changePage(context, MyHomePage());
+          } else {
+            // L'utilisateur doit compléter son inscription, redirigez-le vers la page d'inscription
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => endRegistration()),
+            );
+          }
+        }
+      }
     } else {
       // L'utilisateur a annulé la connexion avec Google.
     }
@@ -234,131 +247,6 @@ Future<void> signInWithGoogle(BuildContext context) async {
         );
       },
     );
-  }
-}
-
-// Avec TELEPHONE
-void signInWithNumber(BuildContext context) {
-  TextEditingController numeroController = TextEditingController();
-  TextEditingController codeController = TextEditingController();
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Entrez votre numéro de téléphone"),
-        content: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    flex: 3,
-                    child: createTextFieldWithIcon(
-                      "Telephone",
-                      "Telephone",
-                      Icons.person,
-                      numeroController,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    flex: 2,
-                    child: createTextFieldWithIcon(
-                      "OTP",
-                      "OTP",
-                      Icons.lock,
-                      codeController,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Flexible(
-                    child: FloatingActionButton.small(
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10.0), // Arrondi des coins
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Icon(
-                        Icons.close,
-                      ),
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Flexible(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                      ),
-                      onPressed: () {
-                        sendOTPCode(numeroController.text);
-                      },
-                      child: Text(
-                        "Code",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                      ),
-                      onPressed: () {
-                        // Ajoutez ici le code pour valider le numéro et le code OTP.
-                      },
-                      child: Text(
-                        "Valider",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  );
-}
-
-Future<void> sendOTPCode(String phoneNumber) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  try {
-    await auth.verifyPhoneNumber(
-      phoneNumber: "+225$phoneNumber",
-      verificationCompleted: (verificationId) {},
-      verificationFailed: (error) {
-        // Le code de vérification a échoué
-      },
-      codeSent: (verificationId, forceResendingToken) {},
-      codeAutoRetrievalTimeout: (verificationId) {
-        // Le délai d'expiration du code de vérification a expiré
-      },
-    );
-  } catch (e) {
-    // Gérez les autres erreurs ici.
   }
 }
 
