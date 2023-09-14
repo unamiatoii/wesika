@@ -24,7 +24,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +101,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     width: 150,
                     onPressed: () {
                       validerInscription(
-                          _emailController, _passwordController, context);
+                          _nameController,
+                          _surnameController,
+                          _emailController,
+                          _passwordController,
+                          _phoneNumberController,
+                          context);
                     },
                     backcolor: Theme.of(context).colorScheme.secondary,
                     bordercolor: Theme.of(context).colorScheme.onPrimary),

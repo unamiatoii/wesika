@@ -1,24 +1,25 @@
 // ignore: file_names
 class Users {
-  String userID;
-  String nom;
-  String email;
-  String adresse;
-  String numero;
-  String photoCniRecto;
-  String photoCniVerso;
-  String photoDeProfil; // Ajout de la propriété photoDeProfil
+  String? userID;
+  String? nom;
+  String? email;
+  String? adresse;
+  String? numero;
+  String? photoCniRecto;
+  String? photoCniVerso;
+  String? mdp;
+  String? photoDeProfil;
 
-  Users({
-    required this.userID,
-    required this.nom,
-    required this.email,
-    required this.adresse,
-    required this.numero,
-    required this.photoCniRecto,
-    required this.photoCniVerso,
-    required this.photoDeProfil, // Initialisation de la propriété photoDeProfil
-  });
+  Users(
+      {this.userID,
+      this.nom,
+      this.email,
+      this.adresse,
+      this.numero,
+      this.photoCniRecto,
+      this.photoCniVerso,
+      this.photoDeProfil,
+      this.mdp});
 
   factory Users.fromMap(Map<String, dynamic> data) {
     return Users(
@@ -27,6 +28,7 @@ class Users {
       email: data['email'] ?? '',
       adresse: data['adresse'] ?? '',
       numero: data['numero'] ?? '',
+      mdp: data['mdp'] ?? '',
       photoCniRecto: data['photoCniRecto'] ?? '',
       photoCniVerso: data['photoCniVerso'] ?? '',
       photoDeProfil: data['photoDeProfil'] ??
@@ -41,10 +43,10 @@ class Users {
       'email': email,
       'adresse': adresse,
       'numero': numero,
+      'mdp': mdp,
       'photoCniRecto': photoCniRecto,
       'photoCniVerso': photoCniVerso,
-      'photoDeProfil':
-          photoDeProfil, 
+      'photoDeProfil': photoDeProfil,
     };
   }
 }
