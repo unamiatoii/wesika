@@ -162,7 +162,7 @@ Future<void> validerInformationsSupplementaire(
           .update(updatedData);
 
       // Naviguez vers la page suivante ou effectuez d'autres actions en cas de succès
-      changePage(context, endRegistration());
+      changePage(context, MyHomePage());
     } else {
       print('L\'utilisateur actuel est null, la mise à jour a échoué.');
     }
@@ -359,5 +359,52 @@ Future<void> sendOTPCode(String phoneNumber) async {
     );
   } catch (e) {
     // Gérez les autres erreurs ici.
+  }
+}
+
+Future<void> signWithEmailAndPassword(
+    BuildContext context, String email, String password) async {
+  try {
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    // Si l'authentification réussit, userCredential contiendra les informations de l'utilisateur.
+    User? user = userCredential.user;
+
+    // Vous pouvez effectuer des actions après la connexion réussie, par exemple, naviguer vers une autre page.
+    if (user != null) {
+      // Connexion réussie, faites ce que vous avez besoin de faire ici.
+      // Par exemple, naviguez vers une autre page.
+      Navigator.pushReplacement<void, void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) =>
+              MyHomePage(), // Remplacez MyProfile par votre page cible.
+        ),
+      );
+    }
+  } catch (e) {
+    // Gestion des erreurs lors de la connexion
+    print('Erreur lors de la connexion : $e');
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Erreur de connexion"),
+          content: Text("Quelque chose s'est mal passé : $e"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fermer la boîte de dialogue.
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -14,10 +14,6 @@ class LoginPage extends StatelessWidget {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> _handleSignIn(BuildContext context) async {
-    // ...
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +51,8 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 25),
               buttons(
-                onPressed: () => _handleSignIn(context),
+                onPressed: () => signWithEmailAndPassword(
+                    context, emailController.text, passwordController.text),
                 bordercolor: Theme.of(context).colorScheme.onPrimary,
                 backcolor: Theme.of(context).colorScheme.secondary,
                 context: context,
