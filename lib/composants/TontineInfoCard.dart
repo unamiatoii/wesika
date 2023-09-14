@@ -6,16 +6,12 @@ class TontineInfoWidget extends StatelessWidget {
   final String title;
   final int fondsRecolte;
   final int fondsARecolter;
-  final String date;
   final int members;
-  final bool isTransactionValid;
   TontineInfoWidget({
     required this.title,
     required this.fondsARecolter,
     required this.fondsRecolte,
-    required this.date,
     required this.members,
-    required this.isTransactionValid,
   });
 
   Widget monspacer() {
@@ -42,33 +38,9 @@ class TontineInfoWidget extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   SizedBox(height: 8.0),
-                  Text('Date: $date'),
                   SizedBox(height: 8.0),
                   Text('Membres: $members'),
                   SizedBox(height: 8.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Transaction: ${isTransactionValid ? 'Validée' : 'Non Validée'}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isTransactionValid ? Colors.green : Colors.red,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          // Action lorsque l'utilisateur appuie sur l'icône (par exemple, pour changer l'état de la transaction)
-                        },
-                        icon: Icon(
-                          isTransactionValid
-                              ? Icons.check_circle
-                              : Icons.cancel,
-                          color: isTransactionValid ? Colors.green : Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
               actions: [
@@ -126,12 +98,6 @@ class TontineInfoWidget extends StatelessWidget {
                 ),
                 monspacer(),
                 SizedBox(height: 8.0),
-                Text(
-                  'Date: $date',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                  ),
-                ),
                 SizedBox(height: 8.0),
                 Text(
                   'Membres: $members',

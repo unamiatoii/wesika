@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wesika/composants/ButtonWithIcon.dart';
 import 'package:wesika/composants/TontineInfoCard.dart';
+import 'package:wesika/composants/TontinesListWidget.dart';
 import 'package:wesika/models/Users.dart';
 
 import '../../composants/TransactionCards.dart';
@@ -79,50 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 SingleChildScrollView(
                   reverse: true,
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      TontineInfoWidget(
-                        title: "Tontine Willy",
-                        fondsARecolter: 1000000,
-                        fondsRecolte: 25000,
-                        date: "date",
-                        members: 10,
-                        isTransactionValid: false,
-                      ),
-                      TontineInfoWidget(
-                        title: "Tontine Willy",
-                        fondsARecolter: 1000000,
-                        fondsRecolte: 25000,
-                        date: "date",
-                        members: 10,
-                        isTransactionValid: false,
-                      ),
-                      TontineInfoWidget(
-                        title: "Tontine Willy",
-                        fondsARecolter: 1000000,
-                        fondsRecolte: 25000,
-                        date: "date",
-                        members: 10,
-                        isTransactionValid: true,
-                      ),
-                      TontineInfoWidget(
-                        title: "Tontine Willy",
-                        fondsARecolter: 1000000,
-                        fondsRecolte: 25000,
-                        date: "date",
-                        members: 10,
-                        isTransactionValid: true,
-                      ),
-                      TontineInfoWidget(
-                        title: "Tontine Willy",
-                        fondsARecolter: 1000000,
-                        fondsRecolte: 25000,
-                        date: "date",
-                        members: 10,
-                        isTransactionValid: false,
-                      ),
-                    ],
-                  ),
+                  child: TontinesListWidget(),
                 ),
                 SizedBox(height: 20),
                 SingleChildScrollView(
