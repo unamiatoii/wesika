@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wesika/composants/fotgotId.dart';
 import 'package:wesika/fonctions/auth/RegisterPage.dart';
+import 'package:wesika/pages/Acceuil/RegisterMode.dart';
 
 import '../../composants/Buttons.dart';
 import '../../composants/ImageLogo.dart';
@@ -17,6 +19,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: textButton(
+          context, "Créer un compte", ChooseRegistrationMethodPage()),
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: Center(
         child: Padding(
@@ -51,7 +55,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 25),
               buttons(
-                onPressed: () => signWithEmailAndPassword(
+                onPressed: () => signInWithEmailAndPassword(
                     context, emailController.text, passwordController.text),
                 bordercolor: Theme.of(context).colorScheme.onPrimary,
                 backcolor: Theme.of(context).colorScheme.secondary,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:wesika/pages/Acceuil/EndRegister.dart';
+import 'package:wesika/pages/Acceuil/Register.dart';
 import '../../composants/NextPage.dart';
 import '../../pages/mainPage/HomePage.dart';
 
@@ -250,7 +251,7 @@ Future<void> signInWithGoogle(BuildContext context) async {
   }
 }
 
-Future<void> signWithEmailAndPassword(
+Future<void> signInWithEmailAndPassword(
     BuildContext context, String email, String password) async {
   try {
     UserCredential userCredential =
@@ -259,24 +260,38 @@ Future<void> signWithEmailAndPassword(
       password: password,
     );
 
-    // Si l'authentification réussit, userCredential contiendra les informations de l'utilisateur.
-    User? user = userCredential.user;
+    // Récupérez l'utilisateur actuel
+    User? actuelUser = userCredential.user;
 
-    // Vous pouvez effectuer des actions après la connexion réussie, par exemple, naviguer vers une autre page.
-    if (user != null) {
-      // Connexion réussie, faites ce que vous avez besoin de faire ici.
-      // Par exemple, naviguez vers une autre page.
-      Navigator.pushReplacement<void, void>(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) =>
-              MyHomePage(), // Remplacez MyProfile par votre page cible.
-        ),
-      );
+    if (actuelUser != null) {
+      // Vérifiez si l'utilisateur a des données dans tous les champs nécessaires
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection("Utilisateur")
+          .doc(actuelUser.uid)
+          .get();
+
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+
+        if (userData['nom'] != null &&
+            userData['prenom'] != null &&
+            userData['numero'] != null) {
+          // L'utilisateur est déjà inscrit, redirigez-le vers la page d'accueil
+          changePage(context, MyHomePage());
+        } else {
+          // L'utilisateur doit compléter son inscription, redirigez-le vers la page d'inscription
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RegistrationPage()),
+          );
+        }
+      }
     }
   } catch (e) {
-    // Gestion des erreurs lors de la connexion
-    print('Erreur lors de la connexion : $e');
+    // Gérez les erreurs d'authentification ici.
+
+    // Affichez un pop-up d'erreur avec la cause de l'échec.
     showDialog(
       context: context,
       builder: (BuildContext context) {
