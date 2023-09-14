@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wesika/composants/fotgotId.dart';
-import 'package:wesika/fonctions/RegisterPage.dart';
+import 'package:wesika/fonctions/auth/RegisterPage.dart';
 import 'package:wesika/pages/Acceuil/Login.dart';
 import 'package:wesika/pages/Acceuil/Register.dart';
 

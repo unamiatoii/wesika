@@ -4,7 +4,7 @@ import 'package:wesika/composants/ImageLogo.dart';
 import 'package:wesika/composants/TextField.dart';
 import 'package:wesika/pages/Acceuil/Login.dart';
 
-import '../../fonctions/RegisterPage.dart';
+import '../../fonctions/auth/RegisterPage.dart';
 
 import '../../composants/fotgotId.dart';
 

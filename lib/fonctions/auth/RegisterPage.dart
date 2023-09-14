@@ -5,8 +5,8 @@ import 'package:wesika/composants/Buttons.dart';
 import 'package:wesika/composants/TextField.dart';
 import 'package:wesika/pages/Acceuil/EndRegister.dart';
 
-import '../composants/NextPage.dart';
-import '../pages/mainPage/HomePage.dart';
+import '../../composants/NextPage.dart';
+import '../../pages/mainPage/HomePage.dart';
 
 void _completeLogin(BuildContext context) {
   Navigator.pushReplacement<void, void>(

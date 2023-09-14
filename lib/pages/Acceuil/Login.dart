@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:wesika/fonctions/RegisterPage.dart';
+import 'package:wesika/fonctions/auth/RegisterPage.dart';
 
 import '../../composants/Buttons.dart';
 import '../../composants/ImageLogo.dart';
