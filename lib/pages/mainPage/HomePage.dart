@@ -49,95 +49,84 @@ class _MyHomePageState extends State<MyHomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
+                    createButtonWithIcon(
+                      onpressed: () {
                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Créer une nouvelle tontine'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  createTextFieldWithIcon(
-                                    'Nom de la tontine',
-                                    'Nom de la tontine',
-                                    Icons
-                                        .ac_unit, // Remplacez par l'icône que vous souhaitez
-                                    nom, // Utilisez le contrôleur de texte approprié
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SingleChildScrollView(
+                                  child: AlertDialog(
+                                title: Text('Créer une nouvelle tontine'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    createTextFieldWithIcon(
+                                      'Nom de la tontine',
+                                      'Nom de la tontine',
+                                      Icons
+                                          .ac_unit, // Remplacez par l'icône que vous souhaitez
+                                      nom, // Utilisez le contrôleur de texte approprié
+                                    ),
+                                    createTextFieldWithIcon(
+                                      'Nombre de participants',
+                                      'Nombre de participants',
+                                      Icons
+                                          .people, // Remplacez par l'icône que vous souhaitez
+                                      participants, // Utilisez le contrôleur de texte approprié
+                                    ),
+                                    createTextFieldWithIcon(
+                                      'Montant à atteindre',
+                                      'Montant à atteindre',
+                                      Icons
+                                          .monetization_on, // Remplacez par l'icône que vous souhaitez
+                                      montantAAtteindre, // Utilisez le contrôleur de texte approprié
+                                    ),
+                                    createTextFieldWithIcon(
+                                      'Montant à verser',
+                                      'Montant à verser',
+                                      Icons
+                                          .attach_money, // Remplacez par l'icône que vous souhaitez
+                                      montantVerse, // Utilisez le contrôleur de texte approprié
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Fermer le pop-up
+                                    },
+                                    child: Text('Annuler'),
                                   ),
-                                  createTextFieldWithIcon(
-                                    'Nombre de participants',
-                                    'Nombre de participants',
-                                    Icons
-                                        .people, // Remplacez par l'icône que vous souhaitez
-                                    participants, // Utilisez le contrôleur de texte approprié
-                                  ),
-                                  createTextFieldWithIcon(
-                                    'Montant à atteindre',
-                                    'Montant à atteindre',
-                                    Icons
-                                        .monetization_on, // Remplacez par l'icône que vous souhaitez
-                                    montantAAtteindre, // Utilisez le contrôleur de texte approprié
-                                  ),
-                                  createTextFieldWithIcon(
-                                    'Montant à verser',
-                                    'Montant à verser',
-                                    Icons
-                                        .attach_money, // Remplacez par l'icône que vous souhaitez
-                                    montantVerse, // Utilisez le contrôleur de texte approprié
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      Tontine nouvelleTontine = Tontine(
+                                          nom: nom.text,
+                                          nombreParticipant:
+                                              num.tryParse(participants.text),
+                                          montantAAtteindre: num.tryParse(
+                                              montantAAtteindre.text),
+                                          montantAVerser:
+                                              num.tryParse(montantVerse.text),
+                                          montantRecolte: 0);
+                                      final user =
+                                          await userData; // Attend la résolution de userData
+
+                                      nouvelleTontine
+                                          .createTontine(user!.userID!);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("CREER"),
                                   ),
                                 ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .pop(); // Fermer le pop-up
-                                  },
-                                  child: Text('Annuler'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    Tontine nouvelleTontine = Tontine(
-                                        nom: nom.text,
-                                        nombreParticipant:
-                                            num.tryParse(participants.text),
-                                        montantAAtteindre: num.tryParse(
-                                            montantAAtteindre.text),
-                                        montantAVerser:
-                                            num.tryParse(montantVerse.text),
-                                        montantRecolte: 0);
-                                    final user =
-                                        await userData; // Attend la résolution de userData
-
-                                    nouvelleTontine
-                                        .createTontine(user!.userID!);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Créer'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                              ));
+                            });
                       },
-                      icon: Icon(
-                        Icons.mail,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      label: const Text(
-                        "Gmail",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    createButtonWithIcon(
-                      onpressed: () {},
                       containerColor: Theme.of(context).colorScheme.primary,
                       context: context,
                       horizontal: 10,
                       vertical: 10,
-                      texte: "Rejoindre",
+                      texte: "Nouvelle",
                       couleurIcon: Theme.of(context).colorScheme.onPrimary,
                       couleurBtn: Theme.of(context).colorScheme.secondary,
                       Icone: Icon(Icons.add),
