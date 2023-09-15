@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-Widget createButtonWithIcon({
-  required BuildContext context,
-  required double horizontal,
-  required double vertical,
-  required String texte,
-  required Color couleurBtn,
-  required Color couleurIcon,
-  required Color containerColor,
-  required Icon Icone,
-}) {
+Widget createButtonWithIcon(
+    {required BuildContext context,
+    required double horizontal,
+    required double vertical,
+    required String texte,
+    required Color couleurBtn,
+    required Color couleurIcon,
+    required Color containerColor,
+    required Icon Icone,
+    required Function onpressed}) {
   return Padding(
       padding: EdgeInsets.symmetric(
         vertical: 20,
@@ -34,7 +34,9 @@ Widget createButtonWithIcon({
             ),
             SizedBox(width: 2.0), // Espacement réduit entre le texte et l'icône
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                onpressed;
+              },
               backgroundColor: couleurBtn, // Couleur du bouton
               foregroundColor: couleurIcon, // Couleur de l'icône
               elevation: 4.0,

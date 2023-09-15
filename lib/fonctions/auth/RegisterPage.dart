@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:wesika/pages/Acceuil/EndRegister.dart';
+import 'package:wesika/pages/Acceuil/OnBoard.dart';
 import 'package:wesika/pages/Acceuil/Register.dart';
 import '../../composants/NextPage.dart';
 import '../../pages/mainPage/HomePage.dart';
@@ -297,6 +298,37 @@ Future<void> signInWithEmailAndPassword(
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Erreur de connexion"),
+          content: Text("Quelque chose s'est mal passé : $e"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fermer la boîte de dialogue.
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+Future<void> signOutUser(BuildContext context) async {
+  try {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement<void, void>(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => OnboardingPage(),
+      ),
+    );
+  } catch (e) {
+    print('Erreur lors de la déconnexion : $e');
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Erreur de déconnexion"),
           content: Text("Quelque chose s'est mal passé : $e"),
           actions: [
             TextButton(

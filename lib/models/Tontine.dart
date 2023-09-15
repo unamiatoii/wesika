@@ -1,29 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wesika/models/Participant.dart';
 
 class Tontine {
   String nom;
-  int nombreParticipants;
-  double montantAAtteindre;
-  double montantAVerser;
-  List<String> participantsId;
+  num? nombreParticipant;
+  num? montantAAtteindre;
+  num? montantAVerser;
+  num? montantRecolte; // Nouvel attribut montantRecolte
+  List<String> participants;
 
   Tontine({
     required this.nom,
-    required this.nombreParticipants,
+    required this.nombreParticipant,
     required this.montantAAtteindre,
     required this.montantAVerser,
-    required this.participantsId,
-  });
+    required this.montantRecolte,
+  }) : participants = [];
 
-  // Fonction pour ajouter une nouvelle tontine à Firestore
-  Future<void> createTontine() async {
+  //
+  Future<void> createTontine(String creatorId) async {
     try {
-      await FirebaseFirestore.instance.collection("Tontines").add({
+      
+      participants.add(creatorId);
+
+      await FirebaseFirestore.instance.collection("Tontine").add({
         "nom": nom,
-        "nombreParticipants": nombreParticipants,
+        "nombreParticipant": nombreParticipant,
         "montantAAtteindre": montantAAtteindre,
         "montantAVerser": montantAVerser,
+        "montantRecolte": montantRecolte,
+        "participants": participants, // Ajout de l'ID du créateur
         // Vous pouvez ajouter d'autres champs ici si nécessaire
       });
       print("Tontine créée avec succès.");
@@ -35,20 +40,21 @@ class Tontine {
   // Fonction pour récupérer une tontine spécifique depuis Firestore
   static Future<Tontine?> getTontine(String tontineId) async {
     try {
-      DocumentSnapshot tontineSnapshot = await FirebaseFirestore.instance
-          .collection("Tontines")
+      DocumentSnapshot Tontinesnapshot = await FirebaseFirestore.instance
+          .collection("Tontine")
           .doc(tontineId)
           .get();
-      if (tontineSnapshot.exists) {
+      if (Tontinesnapshot.exists) {
         Map<String, dynamic> tontineData =
-            tontineSnapshot.data() as Map<String, dynamic>;
+            Tontinesnapshot.data() as Map<String, dynamic>;
         // Utilisez les données pour créer une instance de Tontine
         return Tontine(
           nom: tontineData["nom"],
-          nombreParticipants: tontineData["nombreParticipants"],
+          nombreParticipant: tontineData["nombreParticipant"],
           montantAAtteindre: tontineData["montantAAtteindre"],
           montantAVerser: tontineData["montantAVerser"],
-          participantsId: [], // Vous devrez implémenter la récupération des participants ici
+          montantRecolte:
+              tontineData["montantRecolte"], // Ajout de montantRecolte
         );
       } else {
         print("Aucune tontine trouvée avec l'ID $tontineId.");
@@ -65,7 +71,7 @@ class Tontine {
       String tontineId, Map<String, dynamic> updatedData) async {
     try {
       await FirebaseFirestore.instance
-          .collection("Tontines")
+          .collection("Tontine")
           .doc(tontineId)
           .update(updatedData);
       print("Tontine mise à jour avec succès.");
@@ -78,7 +84,7 @@ class Tontine {
   static Future<void> deleteTontine(String tontineId) async {
     try {
       await FirebaseFirestore.instance
-          .collection("Tontines")
+          .collection("Tontine")
           .doc(tontineId)
           .delete();
       print("Tontine supprimée avec succès.");
@@ -87,27 +93,27 @@ class Tontine {
     }
   }
 
-  // Fonction pour récupérer toutes les tontines enregistrées dans Firestore
+  // Fonction pour récupérer toutes les Tontines enregistrées dans Firestore
   static Future<List<Tontine>> getAllTontines() async {
     try {
       QuerySnapshot tontineQuery =
-          await FirebaseFirestore.instance.collection("Tontines").get();
-      List<Tontine> tontines = [];
+          await FirebaseFirestore.instance.collection("Tontine").get();
+      List<Tontine> Tontines = [];
       for (QueryDocumentSnapshot tontineDoc in tontineQuery.docs) {
         Map<String, dynamic> tontineData =
             tontineDoc.data() as Map<String, dynamic>;
         Tontine tontine = Tontine(
           nom: tontineData["nom"],
-          nombreParticipants: tontineData["nombreParticipants"],
+          nombreParticipant: tontineData["nombreParticipant"],
           montantAAtteindre: tontineData["montantAAtteindre"],
           montantAVerser: tontineData["montantAVerser"],
-          participantsId: [], // Vous devrez implémenter la récupération des participants ici
+          montantRecolte: tontineData["montantRecolte"],
         );
-        tontines.add(tontine);
+        Tontines.add(tontine);
       }
-      return tontines;
+      return Tontines;
     } catch (e) {
-      print("Erreur lors de la récupération des tontines : $e");
+      print("Erreur lors de la récupération des Tontines : $e");
       return [];
     }
   }
