@@ -217,12 +217,30 @@ Future<void> signInWithGoogle(BuildContext context) async {
             // L'utilisateur est déjà inscrit, redirigez-le vers la page d'accueil
             changePage(context, MyHomePage());
           } else {
-            // L'utilisateur doit compléter son inscription, redirigez-le vers la page d'inscription
+            // L'utilisateur doit compléter son profil, redirigez-le vers la page d'inscription
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => endRegistration()),
             );
           }
+        } else {
+          // L'utilisateur n'a pas de compte, créez-en un pour lui
+          await FirebaseFirestore.instance
+              .collection("Utilisateur")
+              .doc(actuelUser.uid)
+              .set({
+            'nom': actuelUser
+                .displayName, // Laissez ces champs vides pour l'utilisateur à compléter
+            'prenom': actuelUser.displayName,
+            'email': actuelUser.email,
+            // Ajoutez d'autres champs ici en fonction de vos besoins
+          });
+
+          // L'utilisateur est maintenant inscrit, redirigez-le vers la page endRegistration
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => endRegistration()),
+          );
         }
       }
     } else {
