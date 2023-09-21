@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class TontineInfoWidget extends StatelessWidget {
   final String title;
-  final int fondsRecolte;
-  final int fondsARecolter;
-  final int members;
+  final num fondsRecolte;
+  final num fondsARecolter;
+  final num members;
   TontineInfoWidget({
     required this.title,
     required this.fondsARecolter,

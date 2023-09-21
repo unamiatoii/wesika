@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: textButton(
           context, "Créer un compte", ChooseRegistrationMethodPage()),
-      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary),
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -69,12 +69,12 @@ class LoginPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'Se connecter avec : ',
+                    'Se Connecter Avec : ',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary),
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
                 SizedBox(height: 25),
@@ -87,13 +87,23 @@ class LoginPage extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.mail,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        size: 30,
                       ),
-                      label: const Text(
+                      label: Text(
                         "Gmail",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w700),
                       ),
-                    ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        fixedSize: Size(150, 45), // Définir la taille souhaitée
+                      ),
+                    )
                   ],
                 ),
               ],

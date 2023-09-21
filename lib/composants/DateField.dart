@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Widget createDateFieldWithIcon(String hintText, String labelText,
     IconData iconData, TextEditingController controller) {
@@ -7,11 +8,15 @@ Widget createDateFieldWithIcon(String hintText, String labelText,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 1.5),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.onPrimary,
+            width: 2,
+          ),
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           color: Colors.white,
         ),
         child: TextField(
+          keyboardType: TextInputType.datetime,
           controller: controller,
           decoration: InputDecoration(
             iconColor: Theme.of(context).colorScheme.onPrimary,

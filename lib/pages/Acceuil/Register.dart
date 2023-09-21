@@ -29,92 +29,96 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       bottomNavigationBar:
           textButton(context, "J'ai deja un compte", LoginPage()),
-      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 100, vertical: 30),
-              child: imageLogo("assets/illustration_sans_bg.png"),
-            ),
-            Text(
-              'INSCRIPTION',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Flexible(
-                  flex: 2,
-                  fit: FlexFit.loose,
-                  child: createTextFieldWithIcon(
-                    "Nom",
-                    "Votre Nom",
-                    Icons.person,
-                    _nameController,
-                  ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 30),
+                  child: imageLogo("assets/illustration_sans_bg.png"),
                 ),
-                Flexible(
-                  flex: 3,
-                  child: createTextFieldWithIcon(
-                    "Entrez votre Prenom",
-                    "Prenoms",
-                    Icons.person,
-                    _surnameController,
-                  ),
+                Text(
+                  'INSCRIPTION',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.loose,
+                      child: createTextFieldWithIcon(
+                        "Nom",
+                        "Votre Nom",
+                        Icons.person,
+                        _nameController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Flexible(
+                      flex: 3,
+                      child: createTextFieldWithIcon(
+                        "Entrez votre Prenom",
+                        "Prenoms",
+                        Icons.person,
+                        _surnameController,
+                      ),
+                    ),
+                  ],
+                ),
+                createTextFieldWithIcon("Entrez votre Adresse e-mail", "E-mail",
+                    Icons.mail, _emailController),
+                createTextFieldWithIcon("Entrez votre Numero de telephone",
+                    "Télephone", Icons.phone_android, _phoneNumberController),
+                createTextFieldWithIcon(
+                  "Entrez votre Mot de passe",
+                  "Mot de passe",
+                  Icons.lock,
+                  _passwordController,
+                ),
+                createTextFieldWithIcon(
+                  "Confirmez le mot de passe",
+                  "Confirmez le mot de passe",
+                  Icons.lock,
+                  _confirmPasswordController,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buttons(
+                        context: context,
+                        texte: 'TERMINER',
+                        height: 45,
+                        width: 150,
+                        onPressed: () {
+                          validerInscription(
+                              _nameController,
+                              _surnameController,
+                              _emailController,
+                              _passwordController,
+                              _phoneNumberController,
+                              context);
+                        },
+                        backcolor: Theme.of(context).colorScheme.secondary,
+                        bordercolor: Theme.of(context).colorScheme.onPrimary),
+                  ],
                 ),
               ],
             ),
-            createTextFieldWithIcon("Entrez votre Adresse e-mail", "E-mail",
-                Icons.mail, _emailController),
-            createTextFieldWithIcon("Entrez votre Numero de telephone",
-                "Télephone", Icons.phone_android, _phoneNumberController),
-            createTextFieldWithIcon(
-              "Entrez votre Mot de passe",
-              "Mot de passe",
-              Icons.lock,
-              _passwordController,
-            ),
-            createTextFieldWithIcon(
-              "Confirmez le mot de passe",
-              "Confirmez le mot de passe",
-              Icons.lock,
-              _confirmPasswordController,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buttons(
-                    context: context,
-                    texte: 'TERMINER',
-                    height: 45,
-                    width: 150,
-                    onPressed: () {
-                      validerInscription(
-                          _nameController,
-                          _surnameController,
-                          _emailController,
-                          _passwordController,
-                          _phoneNumberController,
-                          context);
-                    },
-                    backcolor: Theme.of(context).colorScheme.secondary,
-                    bordercolor: Theme.of(context).colorScheme.onPrimary),
-              ],
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }

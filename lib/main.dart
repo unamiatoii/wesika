@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wesika/composants/AppBar.dart';
+import 'package:wesika/composants/BottomAppBar.dart';
+import 'package:wesika/composants/drawer.dart';
 import 'package:wesika/pages/Acceuil/EndRegister.dart';
 import 'package:wesika/pages/Acceuil/OnBoard.dart';
 import 'package:wesika/pages/Acceuil/Register.dart';
@@ -39,6 +42,22 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: OnboardingPage(),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  final Widget nextPage;
+
+  const Home({Key? key, required this.nextPage}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyAppBar(),
+      drawer: buildDrawer(context),
+      body: nextPage,
+      bottomNavigationBar: MyBottomAppBar(),
     );
   }
 }

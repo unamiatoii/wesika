@@ -1,46 +1,40 @@
-// import 'package:finance_me/Pages/Dashboard.dart';
-// import 'package:finance_me/Pages/Relance/Relance.dart';
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:wesika/composants/NextPage.dart';
+import 'package:wesika/main.dart';
+import 'package:wesika/pages/mainPage/HomePage.dart';
 
-// void main() => runApp(MaterialApp(home: MyBottomAppBar()));
+class MyBottomAppBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      color: Colors.white,
+      elevation: 0,
+      shape: CircularNotchedRectangle(),
+      notchMargin: 8.0,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          botttomAppBarIconButton(context, Icons.home),
+          botttomAppBarIconButton(context, Icons.search),
+          botttomAppBarIconButton(context, Icons.add),
+          botttomAppBarIconButton(context, Icons.notifications),
+          botttomAppBarIconButton(context, Icons.account_circle),
+        ],
+      ),
+    );
+  }
+}
 
-// class MyBottomAppBar extends StatelessWidget {
-//   final color = Color.fromARGB(255, 73, 10, 115);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BottomAppBar(
-//       elevation: 0,
-//       color: Colors.white,
-//       height: 60,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//         children: [
-//           IconButton(
-//             icon: Icon(Icons.home, color: color),
-//             onPressed: () {
-//               Navigator.push(context,
-//                   MaterialPageRoute(builder: (context) => Dashboard()));
-//             },
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.only(bottom: 10),
-//             child: IconButton(
-//               icon: Icon(Icons.share, color: color, size: 30),
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => Relance()),
-//                 );
-//               },
-//             ),
-//           ),
-//           IconButton(
-//             icon: Icon(Icons.settings, color: color),
-//             onPressed: () {},
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+Widget botttomAppBarIconButton(BuildContext context, IconData icon) {
+  return IconButton(
+    icon: Icon(
+      icon,
+      size: 30,
+      color: Theme.of(context).colorScheme.onPrimary,
+    ),
+    onPressed: () {
+      changePage(context, Home(nextPage: MyHomePage()));
+    },
+  );
+}

@@ -4,24 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:wesika/composants/TontineInfoCard.dart';
 
 class TontinesListWidget extends StatelessWidget {
-  User? user = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection("Tontine")
-          .where("participants", arrayContainsAny: [user?.uid]).snapshots(),
+          .where("participants", arrayContainsAny: [
+        FirebaseAuth.instance.currentUser?.uid
+      ]).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text("Erreur : ${snapshot.error}");
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Affiche un indicateur de chargement en attendant les données.
+          return CircularProgressIndicator();
         }
 
-        // Une fois les données chargées, vous pouvez les afficher.
+        // Le reste de votre code pour afficher les tontines lorsque l'utilisateur est connecté
         List<Widget> tontinesWidgets = [];
         final tontines = snapshot.data?.docs ?? [];
 
@@ -39,6 +39,38 @@ class TontinesListWidget extends StatelessWidget {
           );
 
           tontinesWidgets.add(tontineWidget);
+        }
+
+        // Vérifiez si la liste des tontines est vide, puis affichez un message approprié.
+        if (tontinesWidgets.isEmpty) {
+          return Container(
+              height: 250,
+              width: 250,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onPrimary
+                        .withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(15),
+              child: Center(
+                child: Text(
+                  'Aucune tontine pour le moment. Créez ou rejoignez-en une pour épargner en toute sécurité !',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                ),
+              ));
         }
 
         return Row(

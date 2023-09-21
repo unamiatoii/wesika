@@ -28,7 +28,6 @@ class _createPasswordFieldWithIconState
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 1.5),
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           color: Colors.white,
         ),

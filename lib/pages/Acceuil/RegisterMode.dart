@@ -16,7 +16,7 @@ class ChooseRegistrationMethodPage extends StatelessWidget {
     return Scaffold(
         bottomNavigationBar:
             textButton(context, "J'ai deja un compte", LoginPage()),
-        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -35,13 +35,14 @@ class ChooseRegistrationMethodPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 50),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       BtnRegistrationMode(
                         onPressed: () {
@@ -64,7 +65,7 @@ class ChooseRegistrationMethodPage extends StatelessWidget {
                         iconData: Icons.email,
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

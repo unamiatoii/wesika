@@ -40,9 +40,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           changePage(context, ChooseRegistrationMethodPage());
                         },
                         height: 45,
-                        width: 150,
-                        backcolor: Theme.of(context).colorScheme.primary,
-                        bordercolor: Theme.of(context).colorScheme.primary),
+                        backcolor: Theme.of(context).colorScheme.onPrimary,
+                        bordercolor: Theme.of(context).colorScheme.secondary),
                     buttons(
                         context: context,
                         texte: "SE CONNECTER",
@@ -50,7 +49,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           changePage(context, LoginPage());
                         },
                         height: 45,
-                        width: 150,
                         backcolor: Theme.of(context).colorScheme.secondary,
                         bordercolor: Theme.of(context).colorScheme.onPrimary),
                   ],
@@ -68,7 +66,7 @@ class OnBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.onPrimary),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [Image.asset('assets/wesika_sans_bg.png')],

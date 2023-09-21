@@ -1,61 +1,77 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tontine {
+  String? id;
   String nom;
-  num? nombreParticipant;
-  num? montantAAtteindre;
-  num? montantAVerser;
-  num? montantRecolte; // Nouvel attribut montantRecolte
-  List<String> participants;
+  num montantAAtteindre;
+  num montantRecolte;
+  num? nombreParticipants;
+  num montantAVerser;
+  num? periodePaiement;
+  num? periodeRetrait;
+  List<String?> participants;
 
   Tontine({
+    this.id,
     required this.nom,
-    required this.nombreParticipant,
     required this.montantAAtteindre,
+    this.montantRecolte = 0,
+    required this.nombreParticipants,
     required this.montantAVerser,
-    required this.montantRecolte,
-  }) : participants = [];
+    required this.periodePaiement,
+    required this.periodeRetrait,
+    required this.participants,
+    int? nombreParticipant,
+  });
 
-  //
+  Map<String, dynamic> toMap() {
+    return {
+      'nom': nom,
+      'montantAAtteindre': montantAAtteindre,
+      'montantRecolte': montantRecolte,
+      'nombreParticipants': nombreParticipants,
+      'montantAVerser': montantAVerser,
+      'periodePaiement': periodePaiement,
+      'periodeRetrait': periodeRetrait,
+      'participants': participants,
+    };
+  }
+
+  factory Tontine.fromMap(Map<String, dynamic> map) {
+    return Tontine(
+      id: map['id'],
+      nom: map['nom'],
+      montantAAtteindre: map['montantAAtteindre'],
+      montantRecolte: map['montantRecolte'],
+      nombreParticipants: map['nombreParticipants'],
+      montantAVerser: map['montantAVerser'],
+      periodePaiement: map['periodePaiement'],
+      periodeRetrait: map['periodeRetrait'],
+      participants: List<String>.from(map['participants'] ?? []),
+    );
+  }
+
   Future<void> createTontine(String creatorId) async {
     try {
-      
       participants.add(creatorId);
 
-      await FirebaseFirestore.instance.collection("Tontine").add({
-        "nom": nom,
-        "nombreParticipant": nombreParticipant,
-        "montantAAtteindre": montantAAtteindre,
-        "montantAVerser": montantAVerser,
-        "montantRecolte": montantRecolte,
-        "participants": participants, // Ajout de l'ID du créateur
-        // Vous pouvez ajouter d'autres champs ici si nécessaire
-      });
+      await FirebaseFirestore.instance.collection("Tontine").add(toMap());
       print("Tontine créée avec succès.");
     } catch (e) {
       print("Erreur lors de la création de la tontine : $e");
     }
   }
 
-  // Fonction pour récupérer une tontine spécifique depuis Firestore
   static Future<Tontine?> getTontine(String tontineId) async {
     try {
-      DocumentSnapshot Tontinesnapshot = await FirebaseFirestore.instance
+      DocumentSnapshot tontineSnapshot = await FirebaseFirestore.instance
           .collection("Tontine")
           .doc(tontineId)
           .get();
-      if (Tontinesnapshot.exists) {
+      if (tontineSnapshot.exists) {
         Map<String, dynamic> tontineData =
-            Tontinesnapshot.data() as Map<String, dynamic>;
-        // Utilisez les données pour créer une instance de Tontine
-        return Tontine(
-          nom: tontineData["nom"],
-          nombreParticipant: tontineData["nombreParticipant"],
-          montantAAtteindre: tontineData["montantAAtteindre"],
-          montantAVerser: tontineData["montantAVerser"],
-          montantRecolte:
-              tontineData["montantRecolte"], // Ajout de montantRecolte
-        );
+            tontineSnapshot.data() as Map<String, dynamic>;
+        return Tontine.fromMap(tontineData);
       } else {
         print("Aucune tontine trouvée avec l'ID $tontineId.");
         return null;
@@ -66,13 +82,11 @@ class Tontine {
     }
   }
 
-  // Fonction pour mettre à jour les données d'une tontine existante dans Firestore
-  Future<void> updateTontine(
-      String tontineId, Map<String, dynamic> updatedData) async {
+  Future<void> updateTontine(Map<String, dynamic> updatedData) async {
     try {
       await FirebaseFirestore.instance
           .collection("Tontine")
-          .doc(tontineId)
+          .doc(id)
           .update(updatedData);
       print("Tontine mise à jour avec succès.");
     } catch (e) {
@@ -80,41 +94,50 @@ class Tontine {
     }
   }
 
-  // Fonction pour supprimer une tontine de Firestore
-  static Future<void> deleteTontine(String tontineId) async {
+  Future<void> deleteTontine() async {
     try {
-      await FirebaseFirestore.instance
-          .collection("Tontine")
-          .doc(tontineId)
-          .delete();
+      await FirebaseFirestore.instance.collection("Tontine").doc(id).delete();
       print("Tontine supprimée avec succès.");
     } catch (e) {
       print("Erreur lors de la suppression de la tontine : $e");
     }
   }
 
-  // Fonction pour récupérer toutes les Tontines enregistrées dans Firestore
   static Future<List<Tontine>> getAllTontines() async {
     try {
       QuerySnapshot tontineQuery =
           await FirebaseFirestore.instance.collection("Tontine").get();
-      List<Tontine> Tontines = [];
+      List<Tontine> tontines = [];
       for (QueryDocumentSnapshot tontineDoc in tontineQuery.docs) {
         Map<String, dynamic> tontineData =
             tontineDoc.data() as Map<String, dynamic>;
-        Tontine tontine = Tontine(
-          nom: tontineData["nom"],
-          nombreParticipant: tontineData["nombreParticipant"],
-          montantAAtteindre: tontineData["montantAAtteindre"],
-          montantAVerser: tontineData["montantAVerser"],
-          montantRecolte: tontineData["montantRecolte"],
-        );
-        Tontines.add(tontine);
+        tontines.add(Tontine.fromMap(tontineData));
       }
-      return Tontines;
+      return tontines;
     } catch (e) {
       print("Erreur lors de la récupération des Tontines : $e");
       return [];
     }
+  }
+
+  Future<void> addParticipant(String participantId) async {
+    try {
+      participants.add(participantId);
+      await FirebaseFirestore.instance
+          .collection("Tontine")
+          .doc(id)
+          .update({"participants": participants});
+      print("Participant ajouté avec succès à la tontine $nom.");
+    } catch (e) {
+      print("Erreur lors de l'ajout du participant à la tontine : $e");
+    }
+  }
+
+  double calculateTotalAmount() {
+    // Implémentez la logique pour calculer le montant total récolté ici
+    double total = 0;
+    // Utilisez la liste des participants et les montants versés
+    // pour calculer le montant total récolté.
+    return total;
   }
 }

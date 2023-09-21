@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wesika/composants/ImageLogo.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final User? user = FirebaseAuth.instance.currentUser;
@@ -16,46 +17,60 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Pendant le chargement, vous pouvez afficher un indicateur de chargement.
-          return CircularProgressIndicator();
+          return AppBar(
+            backgroundColor: Theme.of(context).colorScheme.onPrimary,
+            leading: IconButton(
+              iconSize: 40,
+              icon: Icon(
+                Icons.menu,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+            actions: [
+              CircularProgressIndicator(), // Affichez le CircularProgressIndicator en chargement.
+            ],
+          );
         }
 
-        if (snapshot.hasError) {
-          // En cas d'erreur, vous pouvez afficher un message d'erreur.
-          return Text('Erreur : ${snapshot.error}');
-        }
-
-        if (!snapshot.hasData) {
-          // Si l'utilisateur n'a pas de données, vous pouvez afficher un message par défaut.
-          return Text('Aucune donnée d\'utilisateur trouvée');
-        }
-
-        // Maintenant, vous pouvez extraire l'URL de l'image de profil de l'utilisateur depuis les données Firestore.
-        final userProfileImageUrl = snapshot.data!['profileImageUrl'];
+        final userProfileImageUrl = snapshot.data?['profileImageUrl'] as String;
 
         return AppBar(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          elevation: 0,
           leading: IconButton(
             iconSize: 40,
             icon: Icon(
               Icons.menu,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
           ),
+          title: imageLogo('assets/wesika_sans_bg.png'),
           actions: [
             IconButton(
-              icon: CircleAvatar(
-                backgroundImage: NetworkImage(userProfileImageUrl),
-                radius: 20, // Ajustez la taille de l'avatar selon vos besoins
-              ),
               onPressed: () {
                 // Action à effectuer lorsque l'utilisateur clique sur l'avatar.
               },
               iconSize: 40,
-            ),
+              icon: Container(width: 150,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    width:
+                        2.0, // Ajustez la largeur de la bordure selon vos besoins
+                  ),
+                ),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(userProfileImageUrl),
+                  radius: 20, // Ajustez la taille de l'avatar selon vos besoins
+                ),
+              ),
+            )
           ],
         );
       },

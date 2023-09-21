@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wesika/main.dart';
 
 import 'package:wesika/pages/Acceuil/EndRegister.dart';
 import 'package:wesika/pages/Acceuil/OnBoard.dart';
@@ -153,7 +154,7 @@ Future<void> validerInformationsSupplementaire(
           .update(updatedData);
 
       // Naviguez vers la page suivante ou effectuez d'autres actions en cas de succès
-      changePage(context, MyHomePage());
+      changePage(context, Home(nextPage: MyHomePage()));
     } else {
       print('L\'utilisateur actuel est null, la mise à jour a échoué.');
     }
@@ -215,7 +216,7 @@ Future<void> signInWithGoogle(BuildContext context) async {
               userData['email'] != null &&
               userData['profileImageUrl'] != null) {
             // L'utilisateur est déjà inscrit, redirigez-le vers la page d'accueil
-            changePage(context, MyHomePage());
+            changePage(context, Home(nextPage: MyHomePage()));
           } else {
             // L'utilisateur doit compléter son profil, redirigez-le vers la page d'inscription
             Navigator.push(
@@ -297,7 +298,7 @@ Future<void> signInWithEmailAndPassword(
             userData['prenom'] != null &&
             userData['numero'] != null) {
           // L'utilisateur est déjà inscrit, redirigez-le vers la page d'accueil
-          changePage(context, MyHomePage());
+          changePage(context, Home(nextPage: MyHomePage()));
         } else {
           // L'utilisateur doit compléter son inscription, redirigez-le vers la page d'inscription
           Navigator.push(

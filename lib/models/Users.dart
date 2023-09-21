@@ -47,6 +47,24 @@ class UserData {
       versoIdImageUrl: data['versoIdImageUrl'] ?? '',
     );
   }
+
+  static fromMap(Object? data) {}
+}
+
+Future<List<UserData>> getAllUsers() async {
+  try {
+    QuerySnapshot userSnapshots =
+        await FirebaseFirestore.instance.collection("Utilisateur").get();
+
+    List<UserData> users = userSnapshots.docs.map((doc) {
+      return UserData.fromSnapshot(doc);
+    }).toList();
+
+    return users;
+  } catch (e) {
+    print('Erreur lors de la récupération de tous les utilisateurs : $e');
+    return [];
+  }
 }
 
 Future<UserData?> getUserData() async {
