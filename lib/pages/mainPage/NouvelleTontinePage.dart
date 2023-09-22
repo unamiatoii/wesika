@@ -237,7 +237,7 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         controller: _participantsController,
-        onChanged: _onSearchTextChanged, // Appelé lorsque le texte change
+        onChanged: _onSearchTextChanged,
         decoration: InputDecoration(
           labelText: 'Rechercher un participant',
           prefixIcon: Icon(

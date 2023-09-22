@@ -4,7 +4,8 @@ import 'package:wesika/composants/NextPage.dart';
 import 'package:wesika/composants/TontinesListWidget.dart';
 import 'package:wesika/main.dart';
 import 'package:wesika/models/Users.dart';
-import 'package:wesika/pages/mainPage/NouvelleTontineWidget.dart';
+import 'package:wesika/pages/mainPage/NouvelleTontinePage.dart';
+import 'package:wesika/pages/mainPage/RejoindreTontinePage.dart';
 
 import '../../composants/TransactionCards.dart';
 
@@ -59,7 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       Icone: Icon(Icons.add),
                     ),
                     createButtonWithIcon(
-                      onpressed: () {},
+                      onpressed: () {
+                        changePage(
+                            context, Home(nextPage: RejoindreTontinePage()));
+                      },
                       containerColor: Theme.of(context).colorScheme.primary,
                       context: context,
                       horizontal: 10,
