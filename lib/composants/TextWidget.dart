@@ -18,9 +18,6 @@ class _MyPageViewState extends State<MyPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PageView with Buttons'),
-      ),
       body: Column(
         children: [
           Expanded(
@@ -34,7 +31,7 @@ class _MyPageViewState extends State<MyPageView> {
               },
               itemBuilder: (BuildContext context, int index) {
                 // Return a widget to display at the current index
-           
+
                 return buildPage(index);
               },
               itemCount: pageCount,

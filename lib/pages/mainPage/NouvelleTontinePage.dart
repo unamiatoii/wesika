@@ -343,12 +343,46 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
 
         // Créez la tontine en utilisant l'UID de l'utilisateur connecté
         await tontine.createTontine(creatorId);
+        _showConfirmationDialog(context, true);
       } else {
         print("Aucun utilisateur connecté.");
       }
     } catch (e) {
+      _showConfirmationDialog(context, false);
       print("Erreur lors de la création de la tontine : $e");
     }
+  }
+
+  void _showConfirmationDialog(BuildContext context, bool success) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(success ? 'Succès' : 'Erreur'),
+          content: Text(success
+              ? 'La tontine a été créée avec succès.'
+              : 'Une erreur s\'est produite lors de la création de la tontine.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (success) {
+                
+                  _nomController.clear();
+                  _periodeRetraitController.clear();
+                  _periodePaiementController.clear();
+                  _nbrparticipantsController.clear();
+                  _montantAAtteindreController.clear();
+                  _montantVerseController.clear();
+                  _selectedParticipants.clear();
+                }
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // Fonction pour gérer la recherche

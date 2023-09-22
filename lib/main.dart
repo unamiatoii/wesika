@@ -10,6 +10,8 @@ import 'package:wesika/pages/mainPage/HomePage.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wesika/pages/mainPage/NouvelleTontinePage.dart';
+import 'package:wesika/pages/mainPage/RejoindreTontinePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +31,13 @@ class MyApp extends StatelessWidget {
         Color.fromARGB(255, 242, 116, 56); // Couleur du texte
 
     return MaterialApp(
+      routes: {
+        '/': (context) => MyHomePage(), // Page d'accueil
+        '/nouvelleTontine': (context) => NouvelleTontineWidget(),
+        '/rejoindreTontine': (context) => RejoindreTontinePage(),
+        '/onboardPage': (context) => OnboardingPage(),
+      },
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.blue,
@@ -41,7 +48,7 @@ class MyApp extends StatelessWidget {
           onSecondary: textColor,
         ),
       ),
-      home: OnboardingPage(),
+      initialRoute: '/onboardPage',
     );
   }
 }

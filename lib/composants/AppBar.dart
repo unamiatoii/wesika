@@ -18,7 +18,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return AppBar(
-            backgroundColor: Theme.of(context).colorScheme.onPrimary,
             leading: IconButton(
               iconSize: 40,
               icon: Icon(
@@ -56,7 +55,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 // Action à effectuer lorsque l'utilisateur clique sur l'avatar.
               },
               iconSize: 40,
-              icon: Container(width: 150,
+              icon: Container(
+                width: 150,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(

@@ -118,17 +118,56 @@ class _RejoindreTontinePageState extends State<RejoindreTontinePage> {
   }
 
   Future<void> _joinTontine(Tontine tontine) async {
-    await FirebaseFirestore.instance
-        .collection("Tontine")
-        .doc(tontine.id)
-        .update({
-      'participants':
-          FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid]),
-    });
+    final user = FirebaseAuth.instance.currentUser;
 
-    setState(() {
-      _hasJoined = true;
-    });
+    if (user != null && !tontine.participants.contains(user.uid)) {
+      await FirebaseFirestore.instance
+          .collection("Tontine")
+          .doc(tontine.id)
+          .update({
+        'participants': FieldValue.arrayUnion([user.uid]),
+      });
+
+      setState(() {
+        _hasJoined = true;
+      });
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Succès'),
+            content: Text('Vous avez adhéré à cette tontine.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Information'),
+            content: Text('Vous appartenez déjà à cette tontine.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   Widget InfoTontineText(String data) {
@@ -137,6 +176,80 @@ class _RejoindreTontinePageState extends State<RejoindreTontinePage> {
       style: TextStyle(
         color: Colors.white, // Couleur du texte en blanc
       ),
+    );
+  }
+
+  Widget listTontineDispo() {
+    return ListView.builder(
+      itemCount: _searchResults.length,
+      itemBuilder: (context, index) {
+        final tontine = _searchResults[index];
+        return Padding(
+          padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onPrimary, // Background color en onPrimary
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.all(12.0), // Espacement autour du ListTile
+              child: ListTile(
+                title: Text(
+                  tontine.nom.toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary // Couleur du texte en blanc
+                      ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InfoTontineText(
+                      'Participants: ${tontine.nombreParticipants.toString()}',
+                    ),
+                    InfoTontineText(
+                      'Cotisation : ${tontine.montantAVerser.toString()}',
+                    ),
+                    InfoTontineText(
+                      'Paiement chaque : ${tontine.periodePaiement.toString()} j',
+                    ),
+                    InfoTontineText(
+                      'Cotisation chaque: ${tontine.periodeRetrait.toString()} j ',
+                    )
+                  ],
+                ),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        _joinTontine(tontine);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                      ),
+                      child: const Text(
+                        'Rejoindre',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -149,90 +262,7 @@ class _RejoindreTontinePageState extends State<RejoindreTontinePage> {
           _buildSearchField(),
           _isLoading
               ? CircularProgressIndicator()
-              : _hasJoined
-                  ? Text(
-                      'Vous avez déjà rejoint cette tontine.',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    )
-                  : Expanded(
-                      child: ListView.builder(
-                        itemCount: _searchResults.length,
-                        itemBuilder: (context, index) {
-                          final tontine = _searchResults[index];
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimary, // Background color en onPrimary
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(
-                                    12.0), // Espacement autour du ListTile
-                                child: ListTile(
-                                  title: Text(
-                                    tontine.nom.toUpperCase(),
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary // Couleur du texte en blanc
-                                        ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      InfoTontineText(
-                                        'Participants: ${tontine.nombreParticipants.toString()}',
-                                      ),
-                                      InfoTontineText(
-                                        'Montant à verser: ${tontine.montantAVerser.toString()}',
-                                      ),
-                                      InfoTontineText(
-                                        'Période de paiement: ${tontine.periodePaiement.toString()}',
-                                      ),
-                                      InfoTontineText(
-                                        'Période de retrait: ${tontine.periodeRetrait.toString()}',
-                                      )
-                                    ],
-                                  ),
-                                  trailing: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          _joinTontine(tontine);
-                                        },
-                                        child: Text(
-                                          'Rejoindre',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+              : Expanded(child: listTontineDispo()),
         ],
       ),
     );
