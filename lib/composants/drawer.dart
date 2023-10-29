@@ -60,7 +60,7 @@ Widget buildDrawer(BuildContext context) {
             InkWell(
               child: buttons(
                 backcolor: Colors.red,
-                bordercolor: Colors.black,
+                textcolor: Colors.black,
                 context: context,
                 height: 45,
                 onPressed: () {

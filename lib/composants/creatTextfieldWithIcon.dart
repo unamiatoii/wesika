@@ -7,12 +7,18 @@ Widget createTextFieldWithIcon(String hintText, String labelText,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            color: Colors.white),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          color: Colors.white,
+          border: Border.all(
+            color: Theme.of(context)
+                .colorScheme
+                .onPrimary, // Couleur de la bordure constante
+            width: 1.5, // Largeur de la bordure
+          ),
+        ),
         child: TextField(
           controller: controller,
           decoration: InputDecoration(
-            iconColor: Theme.of(context).colorScheme.onPrimary,
             labelText: labelText,
             labelStyle:
                 TextStyle(color: Theme.of(context).colorScheme.onPrimary),
@@ -20,10 +26,8 @@ Widget createTextFieldWithIcon(String hintText, String labelText,
               iconData,
               color: Theme.of(context).colorScheme.secondary,
             ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
+            border: InputBorder
+                .none, // Supprimer la bordure par défaut du champ de texte
             contentPadding: EdgeInsets.zero,
             hintText: hintText,
             floatingLabelBehavior: FloatingLabelBehavior.never,

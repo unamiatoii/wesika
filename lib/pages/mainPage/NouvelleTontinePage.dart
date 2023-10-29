@@ -145,7 +145,7 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
                             _participantsController.text);
                       },
                       backcolor: Theme.of(context).colorScheme.secondary,
-                      bordercolor: Theme.of(context).colorScheme.onPrimary),
+                      textcolor: Theme.of(context).colorScheme.onPrimary),
                   buttons(
                       context: context,
                       texte: "Créer",
@@ -154,7 +154,7 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
                         createTontine();
                       },
                       backcolor: Theme.of(context).colorScheme.secondary,
-                      bordercolor: Theme.of(context).colorScheme.onPrimary)
+                      textcolor: Theme.of(context).colorScheme.onPrimary)
                 ],
               )
             ],
@@ -367,7 +367,6 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
               onPressed: () {
                 Navigator.of(context).pop();
                 if (success) {
-                
                   _nomController.clear();
                   _periodeRetraitController.clear();
                   _periodePaiementController.clear();
@@ -386,7 +385,7 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
   }
 
   // Fonction pour gérer la recherche
-  void _onSearchTextChanged(String searchText) {
+  void _onSearchTextChanged(String searchText) async {
     _searchResults.clear(); // Effacez les résultats de recherche existants
 
     if (searchText.isEmpty) {
@@ -397,7 +396,7 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
 
     // Effectuez votre logique de recherche ici, par exemple, à partir d'une liste d'utilisateurs
     // Remplacez cette logique par votre propre logique de recherche
-    final List<UserData> searchResults = _performSearch(searchText);
+    final List<UserData> searchResults = await _performSearch(searchText);
 
     // Mettez à jour la liste des résultats de recherche
     setState(() {
@@ -406,10 +405,10 @@ class _NouvelleTontineWidgetState extends State<NouvelleTontineWidget> {
   }
 
   // Simulez la logique de recherche (remplacez par votre propre logique)
-  List<UserData> _performSearch(String searchText) {
+  Future<List<UserData>> _performSearch(String searchText) async {
     // Vous pouvez implémenter votre propre logique de recherche ici
     // Pour cet exemple, nous simulons une recherche dans une liste fictive d'utilisateurs
-    final List<UserData> allUsers = getAllUsers() as List<UserData>;
+    final List<UserData> allUsers = await getAllUsers();
     return allUsers
         .where((user) =>
             user.email!.toLowerCase().contains(searchText.toLowerCase()))

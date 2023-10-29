@@ -6,9 +6,8 @@ import 'package:wesika/pages/Acceuil/RegisterMode.dart';
 
 import '../../composants/Buttons.dart';
 import '../../composants/ImageLogo.dart';
-import '../../composants/TextField.dart';
+import '../../composants/creatTextfieldWithIcon.dart';
 import '../../composants/passwordField.dart';
-import '../mainPage/HomePage.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -58,7 +57,7 @@ class LoginPage extends StatelessWidget {
                 buttons(
                   onPressed: () => signInWithEmailAndPassword(
                       context, emailController.text, passwordController.text),
-                  bordercolor: Theme.of(context).colorScheme.onPrimary,
+                  textcolor: Theme.of(context).colorScheme.onPrimary,
                   backcolor: Theme.of(context).colorScheme.secondary,
                   context: context,
                   height: 45,
@@ -72,7 +71,7 @@ class LoginPage extends StatelessWidget {
                     'Se Connecter Avec : ',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onPrimary),
                   ),

@@ -18,111 +18,65 @@ class TontineInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(title),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+      child: Container(
+          height: 250,
+          width: 250,
+          decoration: BoxDecoration(
+            border: Border.all(width: 1.5),
+            color: Theme.of(context).colorScheme.onPrimary,
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "$fondsRecolte / $fondsARecolter",
+                    title.toUpperCase(),
                     style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).colorScheme.onPrimary),
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).colorScheme.primary),
                   ),
-                  SizedBox(height: 8.0),
-                  SizedBox(height: 8.0),
-                  Text('Membres: $members'),
-                  SizedBox(height: 8.0),
+                  Icon(
+                    Icons.account_balance_wallet,
+                    color: Theme.of(context).colorScheme.secondary,
+                    size: 40,
+                  )
                 ],
               ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Fermer'),
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-        child: Container(
-            height: 250,
-            width: 250,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.onPrimary),
-                    ),
-                    Icon(
-                      Icons.account_balance_wallet,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      size: 40,
-                    )
-                  ],
-                ),
-                monspacer(),
-                SizedBox(height: 8.0),
-                SizedBox(height: 8.0),
-                Text(
-                  'Membres: $members',
-                  style: TextStyle(
-                    fontSize: 14.0,
+              monspacer(),
+              SizedBox(height: 8.0),
+              SizedBox(height: 8.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "$fondsRecolte ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Theme.of(context).colorScheme.primary),
                   ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "$fondsRecolte ",
+                  Text(
+                    "/ ",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                  Text("$fondsARecolter",
                       style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                    Text("/",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30)),
-                    Text("$fondsARecolter",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30)),
-                  ],
-                ),
-              ],
-            )),
-      ),
+                          fontSize: 30)),
+                ],
+              ),
+            ],
+          )),
     );
   }
 }

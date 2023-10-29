@@ -41,7 +41,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         },
                         height: 45,
                         backcolor: Theme.of(context).colorScheme.onPrimary,
-                        bordercolor: Theme.of(context).colorScheme.secondary),
+                        textcolor: Theme.of(context).colorScheme.secondary),
                     buttons(
                         context: context,
                         texte: "SE CONNECTER",
@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         },
                         height: 45,
                         backcolor: Theme.of(context).colorScheme.secondary,
-                        bordercolor: Theme.of(context).colorScheme.onPrimary),
+                        textcolor: Theme.of(context).colorScheme.onPrimary),
                   ],
                 )),
           ],

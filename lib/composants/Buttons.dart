@@ -7,7 +7,7 @@ Widget buttons({
   double? width, // Optionnelles avec null comme valeur par défaut.
   required Function onPressed,
   required Color backcolor,
-  required Color bordercolor,
+  required Color textcolor,
 }) {
   height ??= 45.0; // Valeur de hauteur par défaut ajustée.
   width ??= (texte.length * 5.0); // Calcul de la largeur ajusté.
@@ -32,7 +32,7 @@ Widget buttons({
       child: Text(
         texte,
         style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 18, color: bordercolor),
+            fontWeight: FontWeight.bold, fontSize: 18, color: textcolor),
       ),
     ),
   );

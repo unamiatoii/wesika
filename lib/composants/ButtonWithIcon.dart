@@ -7,7 +7,6 @@ Widget createButtonWithIcon(
     required String texte,
     required Color couleurBtn,
     required Color couleurIcon,
-    required Color containerColor,
     required Icon Icone,
     required Function onpressed}) {
   return Padding(
@@ -16,18 +15,19 @@ Widget createButtonWithIcon(
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: containerColor,
-          borderRadius: BorderRadius.circular(12.0), // Arrondi des coins
+          border: Border.all(width: 1.5),
+          color: Theme.of(context).colorScheme.onPrimary,
+          borderRadius: BorderRadius.circular(12.0),
         ),
         padding:
             EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
         child: Row(
-          mainAxisSize: MainAxisSize.min, // Réduit la largeur du Row
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               texte,
               style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.primary,
                   fontSize: 17,
                   fontWeight:
                       FontWeight.bold), // Ajustez la taille de la police ici

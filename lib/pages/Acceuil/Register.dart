@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wesika/composants/Buttons.dart';
 import 'package:wesika/composants/ImageLogo.dart';
-import 'package:wesika/composants/TextField.dart';
+import 'package:wesika/composants/creatTextfieldWithIcon.dart';
 import 'package:wesika/pages/Acceuil/Login.dart';
 
 import '../../fonctions/auth/RegisterPage.dart';
@@ -113,7 +113,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               context);
                         },
                         backcolor: Theme.of(context).colorScheme.secondary,
-                        bordercolor: Theme.of(context).colorScheme.onPrimary),
+                        textcolor: Theme.of(context).colorScheme.onPrimary),
                   ],
                 ),
               ],

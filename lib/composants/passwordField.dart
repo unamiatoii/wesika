@@ -30,6 +30,12 @@ class _createPasswordFieldWithIconState
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           color: Colors.white,
+          border: Border.all(
+            color: Theme.of(context)
+                .colorScheme
+                .onPrimary, // Couleur de la bordure constante
+            width: 1.5, // Largeur de la bordure
+          ),
         ),
         child: TextField(
           controller: widget.controller,
@@ -51,10 +57,7 @@ class _createPasswordFieldWithIconState
                 });
               },
             ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
+            border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
             hintText: widget.hintText,
             floatingLabelBehavior: FloatingLabelBehavior.never,

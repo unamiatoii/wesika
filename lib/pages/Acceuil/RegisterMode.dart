@@ -33,7 +33,7 @@ class ChooseRegistrationMethodPage extends StatelessWidget {
                       Text(
                         "COMMENÇONS : ",
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),

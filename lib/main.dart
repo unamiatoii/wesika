@@ -24,32 +24,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color.fromARGB(255, 118, 205, 205);
-    ; // Couleur principale
-    const textColor = Color.fromARGB(255, 38, 71, 78); // Couleur secondaire
+    const primaryColor = Color.fromARGB(255, 255, 255, 255);
+    ; 
+    const textColor = Color.fromARGB(255, 28, 41, 66); 
     const secondaryColor =
-        Color.fromARGB(255, 242, 116, 56); // Couleur du texte
+        Color.fromARGB(255, 95, 194, 186);
 
     return MaterialApp(
-      routes: {
-        '/': (context) => MyHomePage(), // Page d'accueil
-        '/nouvelleTontine': (context) => NouvelleTontineWidget(),
-        '/rejoindreTontine': (context) => RejoindreTontinePage(),
-        '/onboardPage': (context) => OnboardingPage(),
-      },
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-        ).copyWith(
-          primary: primaryColor,
-          secondary: secondaryColor,
-          onPrimary: textColor,
-          onSecondary: textColor,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.blue,
+          ).copyWith(
+            primary: primaryColor,
+            secondary: secondaryColor,
+            onPrimary: textColor,
+            onSecondary: textColor,
+          ),
         ),
-      ),
-      initialRoute: '/onboardPage',
-    );
+        home: OnboardingPage());
   }
 }
 

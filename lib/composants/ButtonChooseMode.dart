@@ -25,18 +25,18 @@ class BtnRegistrationMode extends StatelessWidget {
           height: 50,
           width: 320,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(12.0),
           ),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
               Icon(
                 iconData,
-                color: iconColor,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
-              SizedBox(width: 20),
               Text(
                 text,
                 style: TextStyle(

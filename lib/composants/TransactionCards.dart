@@ -29,16 +29,8 @@ class TransactionCard extends StatelessWidget {
       margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        color: Theme.of(context).colorScheme.primary,
-        border: Border.all(color: Theme.of(context).colorScheme.primary),
+        color: Theme.of(context).colorScheme.onPrimary,
+        border: Border.all(color: Theme.of(context).colorScheme.onPrimary),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(

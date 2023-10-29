@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wesika/composants/AppBar.dart';
 import 'package:wesika/composants/ButtonWithIcon.dart';
 import 'package:wesika/composants/NextPage.dart';
 import 'package:wesika/composants/TontinesListWidget.dart';
@@ -50,8 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         changePage(
                             context, Home(nextPage: NouvelleTontineWidget()));
                       },
-                      containerColor: Theme.of(context).colorScheme.primary,
-                      context: context,
+                       context: context,
                       horizontal: 10,
                       vertical: 10,
                       texte: "Nouvelle",
@@ -64,8 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         changePage(
                             context, Home(nextPage: RejoindreTontinePage()));
                       },
-                      containerColor: Theme.of(context).colorScheme.primary,
-                      context: context,
+                         context: context,
                       horizontal: 10,
                       vertical: 10,
                       texte: "Rejoindre",

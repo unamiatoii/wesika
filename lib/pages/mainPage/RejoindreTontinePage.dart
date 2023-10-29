@@ -184,66 +184,65 @@ class _RejoindreTontinePageState extends State<RejoindreTontinePage> {
       itemCount: _searchResults.length,
       itemBuilder: (context, index) {
         final tontine = _searchResults[index];
-        return Padding(
-          padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context)
-                  .colorScheme
-                  .onPrimary, // Background color en onPrimary
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.all(12.0), // Espacement autour du ListTile
-              child: ListTile(
-                title: Text(
-                  tontine.nom.toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary // Couleur du texte en blanc
+
+        return Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12), color: Colors.white),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ListTile(
+                  title: Text(
+                    tontine.nom.toUpperCase(),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InfoTontineText(
+                        'Participants: ${tontine.nombreParticipants.toString()}',
                       ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InfoTontineText(
-                      'Participants: ${tontine.nombreParticipants.toString()}',
-                    ),
-                    InfoTontineText(
-                      'Cotisation : ${tontine.montantAVerser.toString()}',
-                    ),
-                    InfoTontineText(
-                      'Paiement chaque : ${tontine.periodePaiement.toString()} j',
-                    ),
-                    InfoTontineText(
-                      'Cotisation chaque: ${tontine.periodeRetrait.toString()} j ',
-                    )
-                  ],
-                ),
-                trailing: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        _joinTontine(tontine);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
+                      InfoTontineText(
+                        'Cotisation : ${tontine.montantAVerser.toString()}',
                       ),
-                      child: const Text(
-                        'Rejoindre',
-                        style: TextStyle(
-                          color: Colors.white,
+                      InfoTontineText(
+                        'Paiement chaque : ${tontine.periodePaiement.toString()} j',
+                      ),
+                      InfoTontineText(
+                        'Cotisation chaque: ${tontine.periodeRetrait.toString()} j ',
+                      )
+                    ],
+                  ),
+                  trailing: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          _joinTontine(tontine);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                        ),
+                        child: const Text(
+                          'Rejoindre',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

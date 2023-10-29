@@ -18,18 +18,19 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return AppBar(
+            backgroundColor: Colors.white,
             leading: IconButton(
               iconSize: 40,
               icon: Icon(
                 Icons.menu,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
             ),
             actions: [
-              CircularProgressIndicator(), // Affichez le CircularProgressIndicator en chargement.
+              CircularProgressIndicator.adaptive(),
             ],
           );
         }
@@ -37,6 +38,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         final userProfileImageUrl = snapshot.data?['profileImageUrl'] as String;
 
         return AppBar(
+          backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
             iconSize: 40,
